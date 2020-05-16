@@ -16,6 +16,11 @@
 # @author  Steve Grunwell
 # @license MIT
 
+readonly IGNORE_GLOBS=(
+    ~/.??*
+    ~/Clouds/*
+)
+
 readonly FILEPATHS=(
     "vendor ../composer.json"
     "node_modules ../package.json"
@@ -86,3 +91,8 @@ done
 echo -e "\\n\\033[0;36mFinding dependency directories with corresponding definition files...\\033[0m\\n"
 
 find "${find_parameters[@]}" | dependency_file_exists | exclude_file
+
+echo -e "\\n\\033[0;36mExcluding specified globs...\\033[0m\\n"
+for ig in "${IGNORE_GLOBS[@]}"; do
+    echo $ig | exclude_file
+done
